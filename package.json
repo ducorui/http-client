@@ -1,6 +1,6 @@
 {
   "name": "@ducor/http-client",
-  "version": "0.1.7",
+  "version": "0.3.0",
   "description": "Promise based HTTP client for the browser and node.js",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
