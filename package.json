@@ -1,0 +1,37 @@
+{
+  "name": "@ducor/http-client",
+  "version": "0.1.6",
+  "description": "Promise based HTTP client for the browser and node.js",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "prepare": "npm run build",
+    "watch": "tsc-watch --onSuccess \"npm run build\"",
+    "release": "npm run build && npm pack && npm publish --access public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ducorui/http-client.git"
+  },
+  "keywords": [
+    "http",
+    "http",
+    "client"
+  ],
+  "author": "Jubayed Hossain",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ducorui/http-client/issues"
+  },
+  "homepage": "https://github.com/ducorui/http-client#readme",
+  "files": [
+    "dist/*"
+  ],
+  "devDependencies": {
+    "tsc-watch": "^6.2.0"
+  },
+  "directories": {
+    "lib": "lib"
+  }
+}

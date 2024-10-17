@@ -1,0 +1,16 @@
+*.iml
+.idea
+.tscache
+.DS_Store
+node_modules/
+package-lock.json
+.npmrc
+.env
+.vscode/
+dist/
+
+*.tgz
+
+.env.local 
+platform-react/yarn.lock
+dui-react/dist
