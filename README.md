@@ -1,30 +1,187 @@
-# Http Library Documentation
 
-## Table of Contents
-1. [Types and Interfaces](#types-and-interfaces)
-2. [Http Class](#http-class)
-   - [Constructor](#constructor)
-   - [Methods](#methods)
-     - [actionRequestMethod](#actionrequestmethod)
-     - [setBaseUrl](#setbaseurl)
-     - [fixToken](#fixtoken)
-     - [getToken](#gettoken)
-     - [setToken](#settoken)
-     - [withToken](#withtoken)
-     - [setParam](#setparam)
-     - [addMethod](#addmethod)
-     - [setWithCredentials](#setwithcredentials)
-     - [removeToken](#removetoken)
-     - [setToast](#settoast)
-     - [buildUrl](#buildurl)
-     - [reset](#reset)
-     - [request](#request)
-     - [get](#get)
-     - [addRequestMethod](#addrequestmethod)
+## Installing
 
-## Types and Interfaces
+Using npm:
+```
+$ npm install @ducor/http-client
+```
 
-### `AnyMethod`
+Using yarn:
+```
+$ yarn add @ducor/http-client
+```
 
-```typescript
-type AnyMethod = (...args: any[]) => any;
+Using pnpm:
+
+```
+pnpm add @ducor/http-client
+```
+
+Once the package is installed, you can import the library using `import` or `require` approach:
+
+## Example
+
+> **Note**: CommonJS usage   In order to gain the TypeScript typings (for intellisense / autocomplete) while using CommonJS imports with
+> `require()`, use the following approach:
+
+```js
+import http from '@ducor/http-client';
+//const http  = require('@ducor/http-client'); // legacy way
+
+// Make a request for a user with a given ID
+http.get('/user?ID=12345')
+  .then(function (response) {
+    // handle success
+    console.log(response);
+  })
+  .catch(function (error) {
+    // handle error
+    console.log(error);
+  })
+  .finally(function () {
+    // always executed
+  });
+
+// Optionally the request above could also be done as
+http.get('/user', {
+    params: {
+      ID: 12345
+    }
+  })
+  .then(function (response) {
+    console.log(response);
+  })
+  .catch(function (error) {
+    console.log(error);
+  })
+  .finally(function () {
+    // always executed
+  });
+
+// Want to use async/await? Add the `async` keyword to your outer function/method.
+async function getUser() {
+  try {
+    const response = await http.get('/user?ID=12345');
+    console.log(response);
+  } catch (error) {
+    console.error(error);
+  }
+}
+```
+
+> **Note**: `async/await` is part of ECMAScript 2017 and is not supported in Internet Explorer and older browsers, so use with
+> caution.
+
+Performing a `POST` request
+```js
+http.post('/user', {
+    firstName: 'Fred',
+    lastName: 'Flintstone'
+  })
+  .then(function (response) {
+    console.log(response);
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+ ```
+
+Performing multiple concurrent requests
+
+```js
+function getUserAccount() {
+  return http.get('/user/12345');
+}
+
+function getUserPermissions() {
+  return http.get('/user/12345/permissions');
+}
+
+Promise.all([getUserAccount(), getUserPermissions()])
+  .then(function (results) {
+    const acct = results[0];
+    const perm = results[1];
+  });
+ ```
+
+### Request method aliases
+
+For convenience, aliases have been provided for all common request methods.
+
+### Request method aliases
+
+For convenience, aliases have been provided for all common request methods.
+
+##### http.request(config)
+##### http.get(url[, config])
+##### http.delete(url[, config])
+##### http.head(url[, config])
+##### http.options(url[, config])
+##### http.post(url[, data[, config]])
+##### http.put(url[, data[, config]])
+##### http.patch(url[, data[, config]])
+
+
+## Response Schema
+
+The response for a request contains the following information.
+
+```js
+{
+  // `data` is the response that was provided by the server
+  data: {},
+
+  // `status` is the HTTP status code from the server response
+  status: 200,
+
+  // `statusText` is the HTTP status message from the server response
+  statusText: 'OK',
+
+  // `headers` the HTTP headers that the server responded with
+  // All header names are lowercase and can be accessed using the bracket notation.
+  // Example: `response.headers['content-type']`
+  headers: {},
+
+  // `config` is the config that was provided to `http` for the request
+  config: {},
+
+  // `request` is the request that generated this response
+  // It is the last ClientRequest instance in node.js (in redirects)
+  // and an XMLHttpRequest instance in the browser
+  request: {}
+}
+```
+
+When using `then`, you will receive the response as follows:
+
+```js
+http.get('/user/12345')
+  .then(function (response) {
+    console.log(response.data);
+    console.log(response.status);
+    console.log(response.statusText);
+    console.log(response.headers);
+    console.log(response.config);
+  });
+```
+## Config Defaults
+
+You can specify config defaults that will be applied to every request.
+
+### Global http defaults
+
+```js
+http.defaults.baseURL = 'https://api.example.com';
+
+// Important: If http is used with multiple domains, the AUTH_TOKEN will be sent to all of them.
+// See below for an example using Custom instance defaults instead.
+http.defaults.headers.common['Authorization'] = AUTH_TOKEN;
+
+http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+```
+
+### set or delete Authorization Token
+
+for delete `http.setToken();`
+you can update `_token` or `Authorization Token` using this method.
+
