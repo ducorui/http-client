@@ -31,8 +31,6 @@ class ToastNotification implements Toast {
 
     public setConfig(alertOrToast: any): void {
 
-        
-
         if (alertOrToast === "alert" || alertOrToast === true) {
             this.isAlert = true;
             this.isDisabled = false;
@@ -56,10 +54,8 @@ class ToastNotification implements Toast {
         if (this.isAlert) {
             alert(message); // Display alert with the message
         }
-        console.log("function", methodName, message, description);
         // Check if the toast configuration has a method with the specified name
         if (this.container && typeof this.container[methodName] === 'function') {
-            console.log("function", methodName, message, description);
             if(typeof message === 'string' && typeof message === 'string') {
                 this.container[methodName](message, description); // Call the specified method with arguments
             }else if(typeof message === 'string'){

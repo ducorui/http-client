@@ -188,7 +188,6 @@ class Http {
   }
 
   public setToast(toast?:any): void{
-    console.log(toast);
     this.toast.setConfig(toast);
   }
 
@@ -212,8 +211,6 @@ class Http {
   
   public async request<T = any>(config: HttpRequestConfig): Promise<HttpResponse<T>> {
     const { url, method = 'GET', headers = {}, data = null, params = {} } = config;
-
-    console.log(url, method, headers, data);
 
     const queryParams = new URLSearchParams({ ...params, ...this.params }).toString();
     const fullUrl = this.buildUrl(queryParams ? `${url}?${queryParams}` : url);
@@ -303,7 +300,6 @@ class Http {
     try {
       const response = await fetch(fullUrl, fetchConfig);
 
-      // console.log('response', response);
       var responseData = await response.json();
 
       if (!response.ok) {
@@ -331,9 +327,9 @@ class Http {
 
         if (typeof responseData === 'object' && 'message' in responseData) {
           const { message } = responseData;
-          // if (typeof message === 'string' && this.toast && 'error' in this.toast) {
-          //   this.toast.error(message);
-          // }
+          if (typeof message === 'string' && this.toast && 'error' in this.toast) {
+            this.toast.error(message);
+          }
 
           if (Array.isArray(message)) {
             message.forEach((msg: string) => {
