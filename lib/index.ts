@@ -75,6 +75,9 @@ class Http {
     return new Proxy(this, {
       get: (target, mthodName: string) => {
         
+
+        console.log("kamal", target, mthodName);
+
         if (mthodName in target) {
           // @ts-ignore
           return target[mthodName];
