@@ -1,8 +1,9 @@
 
 import defaults from "./defaults";
+import ToastNotification from "./toast";
 // import { parse } from 'yaml';
 
-type AnyMethod = (...args: any[]) => any;
+export type AnyMethod = (...args: any[]) => any;
 
 interface HttpRequestConfig {
   url: string;
@@ -63,7 +64,7 @@ class Http {
    * Toaster system
    * @returns 
    */
-  private toast?:any ;
+  private toast: any = null;
 
   /**
    * Method name
@@ -72,12 +73,12 @@ class Http {
   private mthodName?: string;
 
   constructor() {
+
+    this.toast = new ToastNotification();
+
     return new Proxy(this, {
       get: (target, mthodName: string) => {
         
-
-        console.log("kamal", target, mthodName);
-
         if (mthodName in target) {
           // @ts-ignore
           return target[mthodName];
@@ -187,7 +188,7 @@ class Http {
   }
 
   public setToast(toast?:any): void{
-    this.toast = toast? toast: undefined;
+    this.toast.setConfig(toast);
   }
 
   private buildUrl(url: string): string {
