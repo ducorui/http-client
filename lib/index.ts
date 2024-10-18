@@ -188,6 +188,7 @@ class Http {
   }
 
   public setToast(toast?:any): void{
+    console.log(toast);
     this.toast.setConfig(toast);
   }
 

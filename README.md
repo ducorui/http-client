@@ -185,3 +185,42 @@ http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
 for delete `http.setToken();`
 you can update `_token` or `Authorization Token` using this method.
 
+### Working with Any Toaster System
+
+To set a toaster for your HTTP client, you can use the following code snippet:
+
+```js
+import http from "@ducor/http-client";
+import toast from "react-hot-toast";
+
+http.setToast(toast); // toast | 'alert' | false;
+```
+
+| Option                      | Description                                 |
+|-----------------------------|---------------------------------------------|
+| `toast`                     | Class or function for toast notifications.  |
+| `'alert'`                   | Uses the window's default alert.            |
+| `false`                     | Disables the toast notifications or alert.  |
+
+
+**Most likely, all React toasters are supported.**
+
+|  -  | Name                                                                 | Install Command           |
+|---------|----------------------------------------------------------------------|---------------------------|
+| ☑️ | [react-toastify](https://github.com/fkhadra/react-toastify)        | `npm install react-toastify` |
+| ☑️ | [react-hot-toast](https://github.com/timolins/react-hot-toast)      | `npm install react-hot-toast` |
+| ☑️ | [react-simple-toasts](https://github.com/michaelhladky/react-simple-toasts) | `npm install react-simple-toasts` |
+| ☑️ | [react-notifications](https://github.com/wojtekmaj/react-notifications) | `npm install react-notifications` |
+| ☑️ | [react-toast](https://github.com/ankane/react-toast)                | `npm install react-toast` |
+| ☑️ | [reapop](https://github.com/LukeHaas/reapop)                        | `npm install reapop`      |
+| ☑️ | [react-alert](https://github.com/schiehll/react-alert)              | `npm install react-alert` |
+| ☑️ | [react-notify-toast](https://github.com/harish2690/react-notify-toast) | `npm install react-notify-toast` |
+| ☑️ | [notistack](https://github.com/iamhosseindhv/notistack)            | `npm install notistack`   |
+| ☑️ | [react-toast-message](https://github.com/wise2c/react-toast-message) | `npm install react-toast-message` |
+| ☑️ | [react-native-toast-message](https://github.com/calintamas/react-native-toast-message) | `npm install react-native-toast-message` |
+| ☑️ | [toasted-notes](https://github.com/ankane/toasted-notes)           | `npm install toasted-notes` |
+| ☑️ | [react-toast-notifications](https://github.com/ankane/react-toast-notifications) | `npm install react-toast-notifications` |
+| ☑️ | [react-s-alert](https://github.com/rca/react-s-alert)              | `npm install react-s-alert` |
+| ☑️ | [react-flash-message](https://github.com/bpampuch/react-flash-message) | `npm install react-flash-message` |
+| ☑️ | [react-notification-system](https://github.com/bitovi/react-notification-system) | `npm install react-notification-system` |
+| ☑️ | [react-notification](https://github.com/matthewmueller/react-notification) | `npm install react-notification` |
