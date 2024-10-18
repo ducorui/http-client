@@ -210,6 +210,8 @@ class Http {
   public async request<T = any>(config: HttpRequestConfig): Promise<HttpResponse<T>> {
     const { url, method = 'GET', headers = {}, data = null, params = {} } = config;
 
+    console.log(url, method, headers, data);
+
     const queryParams = new URLSearchParams({ ...params, ...this.params }).toString();
     const fullUrl = this.buildUrl(queryParams ? `${url}?${queryParams}` : url);
 
@@ -363,8 +365,7 @@ class Http {
 
       return httpResponse;
     } catch (error) {
-
-      console.log("eris sdlkfa");
+      
       if (error instanceof Error) {
         // toast.error(error.message);
       }
