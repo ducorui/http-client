@@ -63,7 +63,7 @@ class Http {
    * Toaster system
    * @returns 
    */
-  private toast?:  object ;
+  private toast?:any ;
 
   /**
    * Method name
@@ -186,10 +186,8 @@ class Http {
     localStorage.removeItem(this.tokenName);
   }
 
-  public setToast(toast?:object): void{
-    if(toast){
-      this.toast = toast;
-    }
+  public setToast(toast?:any): void{
+    this.toast = toast? toast: undefined;
   }
 
   private buildUrl(url: string): string {
@@ -355,8 +353,8 @@ class Http {
 
       if (typeof responseData === 'object' && 'message' in responseData) {
         const { message } = responseData;
-        if (typeof message === 'string') {
-          // toast.success(message);
+        if (typeof message === 'string' && this.toast) {
+          this.toast.success(message);
         }
 
         if (Array.isArray(message)) {
