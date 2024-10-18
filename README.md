@@ -209,3 +209,4 @@ http.setToast(toast); // toast | 'alert' | false;
 |-----|----------------------------------------------------------------------|---------------------------|
 | ☑️ | [react-toastify](https://github.com/fkhadra/react-toastify)           | `npm install react-toastify` |
 | ☑️ | [react-hot-toast](https://github.com/timolins/react-hot-toast)        | `npm install react-hot-toast` |
+| ☑️ | [sonner](https://github.com/emilkowalski/sonner)                      | `npm install sonner` |
