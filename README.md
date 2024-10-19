@@ -11,12 +11,6 @@ Using yarn:
 $ yarn add @ducor/http-client
 ```
 
-Using pnpm:
-
-```
-pnpm add @ducor/http-client
-```
-
 Once the package is installed, you can import the library using `import` or `require` approach:
 
 ## Example
