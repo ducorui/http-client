@@ -176,14 +176,25 @@ http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
 
 **and you can also set `Authorization` token via method**
 
+```ts
+// interface
+
+function setToken(
+  token: string | null = null, 
+  tokenName: string = '_token', 
+  storageName: 'localStorage' | 'cookies' = 'localStorage'
+): static
+```
+
 ```js
 http.setToken(AUTH_TOKEN); // `Bearer ` with or without
 ```
 
-### set or delete Authorization Token
-
-for delete `http.setToken();`
-you can update `_token` or `Authorization Token` using this method.
+**delete Authorization Token**
+```js
+http.setToken();
+```
+you can update `_token` or `Authorization` token using this method.
 
 ### Working with Any Toaster System
 
