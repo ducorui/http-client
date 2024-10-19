@@ -63,7 +63,7 @@ async function getUser() {
 }
 ```
 
-> **Note**: `async/await` is part of ECMAScript 2017 and is not supported in Internet Explorer and older browsers, so use with
+> **Note**: `async/await` is part of ECMAScript 2022 and is not supported in Internet Explorer and older browsers, so use with
 > caution.
 
 Performing a `POST` request
@@ -172,6 +172,12 @@ http.defaults.baseURL = 'https://api.example.com';
 http.defaults.headers.common['Authorization'] = AUTH_TOKEN;
 
 http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+```
+
+**and you can also set `Authorization` token via method**
+
+```js
+http.setToken(AUTH_TOKEN); // `Bearer ` with or without
 ```
 
 ### set or delete Authorization Token
