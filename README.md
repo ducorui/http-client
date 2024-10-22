@@ -11,12 +11,6 @@ Using yarn:
 $ yarn add @ducor/http-client
 ```
 
-Using pnpm:
-
-```
-pnpm add @ducor/http-client
-```
-
 Once the package is installed, you can import the library using `import` or `require` approach:
 
 ## Example
@@ -69,7 +63,7 @@ async function getUser() {
 }
 ```
 
-> **Note**: `async/await` is part of ECMAScript 2017 and is not supported in Internet Explorer and older browsers, so use with
+> **Note**: `async/await` is part of ECMAScript 2022 and is not supported in Internet Explorer and older browsers, so use with
 > caution.
 
 Performing a `POST` request
@@ -180,10 +174,27 @@ http.defaults.headers.common['Authorization'] = AUTH_TOKEN;
 http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 ```
 
-### set or delete Authorization Token
+**and you can also set `Authorization` token via method**
 
-for delete `http.setToken();`
-you can update `_token` or `Authorization Token` using this method.
+```ts
+// interface
+
+function setToken(
+  token: string | null = null, 
+  tokenName: string = '_token', 
+  storageName: 'localStorage' | 'cookies' = 'localStorage'
+): static
+```
+
+```js
+http.setToken(AUTH_TOKEN); // `Bearer ` with or without
+```
+
+**delete Authorization Token**
+```js
+http.setToken();
+```
+you can update `_token` or `Authorization` token using this method.
 
 ### Working with Any Toaster System
 
