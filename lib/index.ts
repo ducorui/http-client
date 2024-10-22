@@ -1,7 +1,6 @@
 
 import defaults from "./defaults";
 import ToastNotification from "./toast";
-// import { parse } from 'yaml';
 
 export type AnyMethod = (...args: any[]) => any;
 
@@ -46,9 +45,10 @@ interface RequestMethodConfig{
   formData?: Record<string, string>;
 }
 
+const API_BASE_URL_NAME = '_API_BASE_URL';
+
 class Http {
 
-  private requestAttributes = {};
   public defaults = defaults;
   private token: string|null|undefined = undefined;
 
@@ -85,13 +85,13 @@ class Http {
         }
          // If the property is not defined, return a function to handle dynamic method invocation
          this.mthodName = mthodName;
-         return <T = any>(...args: any[]): T => (target as any).actionRequestMethod(...args);
+         return <T = any>(...args: any[]): T => (target as any).prepare(...args);
       }
     });
   }
 
 
-  public actionRequestMethod<T = any>(url: string = "", ...args: any[]) {
+  public prepare<T = any>(url: string = "", ...args: any[]) {
 
     if(!this.mthodName){
       throw new Error("Method name required.");
@@ -115,8 +115,17 @@ class Http {
     return this.request<T>({ ...config, url, method: attributes.method, data });
   }
 
-  public setBaseUrl(baseURL: string) {
-    this.baseURL = baseURL;
+  public setBaseUrl(baseURL?: string) {
+
+    if(typeof baseURL === 'string' ){
+      localStorage.setItem(API_BASE_URL_NAME, baseURL);
+      this.defaults.baseURL = baseURL;  
+
+    }else {
+      localStorage.removeItemItem(API_BASE_URL_NAME);
+      this.defaults.baseURL = undefined;  
+    }
+ 
     return this;
   }
 
@@ -193,6 +202,14 @@ class Http {
 
   private buildUrl(url: string): string {
 
+    if(this.defaults.baseURL === null || this.defaults.baseURL === undefined){
+      const baseURL = localStorage.getItem(API_BASE_URL_NAME);
+
+      if(typeof baseURL === 'string'){
+        this.defaults.baseURL = baseURL;
+      }
+    }
+
     if (this.baseURL && !url.startsWith('http')) {
       return `${this.baseURL}${url.startsWith('/') ? '' : '/'}${url}`;
     } else if (this.defaults.baseURL && !url.startsWith('http')) {
@@ -233,69 +250,6 @@ class Http {
     if (data && method.toUpperCase() !== 'GET') {
       fetchConfig.body = data instanceof FormData ? data : JSON.stringify(data);
     }
-
-    // return fetch(fullUrl, fetchConfig).then(async (response) => {
-
-    //   const contentType = response.headers.get('Content-Type');
-    //   //if json
-    //   if (response.status >= 200 && response.status < 300) {
-    //     // Success: Status codes from 200 to 299
-    //     let responseData: any = "";
-    //     if (contentType && contentType.includes('application/json')) {
-    //       responseData = await response.json();
-
-    //     }else if (contentType && contentType.includes('application/yaml')) {
-    //      // Read the YAML response as text
-    //         const yamlText = await response.text();
-    //         // Parse YAML into a JavaScript object
-    //         // responseData = parse(yamlText);
-            
-    //     }  else {
-    //       responseData = await response.text();
-    //     }  
-
-    //     const httpResponse: HttpResponse<T> = {
-    //       data: responseData,
-    //       status: response.status,
-    //       statusText: response.statusText,
-    //       headers: response.headers,
-    //       config,
-    //     };
-        
-    //     return httpResponse;
-    //   } else if (response.status >= 400 && response.status < 500) {
-    //     // Client errors: Status codes from 400 to 499
-    //     if (response.status === 401) {
-    //       this.removeToken();
-    //     }
-    //     throw new Error(`Client error: ${response.status}`);
-    //   } else if (response.status >= 500 && response.status < 600) {
-    //     // Server errors: Status codes from 500 to 599
-    //     throw new Error(`Server error: ${response.status}`);
-    //   } else {
-    //     // Unexpected status codes
-    //     throw new Error(`Unexpected response code: ${response.status}`);
-    //   }
-
-    // }).catch(clientError => {
-      
-    //   const error: HttpError = new Error("newtwork error") as HttpError;
-    //   let errors: FormDataError = {};
-
-    //   error.config = config;
-    //   error.code = '00';
-    //   error.errors = errors;
-    //   error.response = {
-    //     data: null,
-    //     status: 0,
-    //     statusText: '',
-    //     headers: {} as Headers,
-    //     config,
-    //   };
-
-
-    //   throw error;
-    // });
 
     try {
       const response = await fetch(fullUrl, fetchConfig);
