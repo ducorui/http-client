@@ -165,6 +165,7 @@ You can specify config defaults that will be applied to every request.
 ### Global http defaults
 
 ```js
+
 http.defaults.baseURL = 'https://api.example.com';
 
 // Important: If http is used with multiple domains, the AUTH_TOKEN will be sent to all of them.
@@ -172,6 +173,15 @@ http.defaults.baseURL = 'https://api.example.com';
 http.defaults.headers.common['Authorization'] = AUTH_TOKEN;
 
 http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+```
+
+**and you can also set `baseURL` token via method**
+
+```js
+// add baseUrl
+http.setBaseURL(url);
+//remove baseUrl 
+http.setBaseURL();
 ```
 
 **and you can also set `Authorization` token via method**
